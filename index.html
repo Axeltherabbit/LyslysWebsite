@@ -233,7 +233,7 @@
     for (let i = 0; i < heroFrameCount; i++) {
         const img = new Image();
         img.onload = handleImageLoad;
-        img.src = `./images/cannolo/frame_${(i + 1).toString().padStart(4, '0')}.jpg`;
+        img.src = `./images/cannolo/frame_${(i + 1).toString().padStart(4, '0')}.webp`;
         heroImages.push(img);
     }
 
@@ -242,7 +242,7 @@
         for (let i = 0; i < slide.frameCount; i++) {
             const img = new Image();
             img.onload = handleImageLoad;
-            img.src = `./images/${slide.folder}/frame_${(i + 1).toString().padStart(4, '0')}.jpg`;
+            img.src = `./images/${slide.folder}/frame_${(i + 1).toString().padStart(4, '0')}.webp`;
             slide.images.push(img);
         }
     });
