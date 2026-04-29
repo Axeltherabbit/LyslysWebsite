@@ -1,332 +1,43 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="icon.ico">
-    <title>Lyslys | Eccellenza Artigianale</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link href="./style.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <link rel="icon" href="icon.ico" />
+  <link href="./style.css" rel="stylesheet" />
 
-    <style>
-        body { background-color: #0a0a0a; margin: 0; padding: 0; }
-        canvas { display: block; background-color: #000; }
-        #loader { transition: opacity 0.5s ease-out; }
-        .animate-me { opacity: 0; transform: translateY(30px); }
-    </style>
+  <title>Lyslys | Eccellenza Artigianale</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <style>
+    body {
+      background-color: #0a0a0a;
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      display: block;
+      background-color: #000;
+    }
+
+    #loader {
+      transition: opacity 0.5s ease-out;
+    }
+
+    .animate-me {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+  </style>
 </head>
+
 <body class="antialiased font-sans text-white">
+  <div id="app"></div>
 
-    <div id="loader" class="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center">
-        <div class="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p class="text-sm tracking-widest uppercase">Caricamento...</p>
-    </div>
-
-    <nav class="fixed top-0 left-0 w-full z-50 px-8 py-6 flex items-center justify-between bg-gradient-to-b from-black/90 to-transparent">
-        <div class="flex items-center gap-4">
-            <img src="icon.ico" class="h-8 w-auto object-contain drop-shadow-md">
-            <span class="text-xl font-bold tracking-tighter uppercase text-white">Lyslys</span>
-        </div>
-    </nav>
-
-    <main id="scroll-container" class="relative h-[400vh]">
-        <div class="sticky top-0 h-screen w-full flex flex-col md:flex-row items-center overflow-hidden">
-            <div class="w-full md:w-1/2 h-1/2 md:h-full relative z-10 bg-black">
-                <canvas id="hero-canvas" class="w-full h-full object-cover"></canvas>
-            </div>
-
-            <div class="w-full md:w-1/2 h-1/2 md:h-full flex flex-col justify-center px-10 lg:px-20 bg-[#0a0a0a] relative z-30">
-                <div id="text-block" class="max-w-xl space-y-8">
-                    <h1 class="animate-me text-5xl md:text-7xl font-black tracking-tighter text-white">Lyslys</h1>
-                    <div class="space-y-6">
-                        <p class="animate-me text-xl md:text-2xl font-light text-gray-400 leading-relaxed">
-                            Portiamo prodotti artigianali <span class="text-red-500 font-medium">...</span>
-                        </p>
-                        <p class="animate-me text-xl md:text-2xl font-light text-gray-400 leading-relaxed">
-                            dai maestri Napoletani e Siciliani <span class="text-red-500 font-medium">....</span>
-                        </p>
-                        <p class="animate-me text-2xl md:text-4xl font-bold text-white border-l-4 border-red-700 pl-6">
-                            nella vostra attività
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <section class="relative z-40 bg-[#0a0a0a] border-y border-white/5 py-16">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-stretch bg-[#0f0f0f] rounded-3xl overflow-hidden shadow-2xl min-h-[450px]">
-                <div class="w-full md:w-3/5 h-64 md:h-auto relative bg-black">
-                    <canvas id="carousel-canvas" class="w-full h-full object-cover"></canvas>
-                    <div class="hidden md:block absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#0f0f0f] to-transparent"></div>
-                </div>
-
-                <div class="w-full md:w-2/5 p-8 md:p-12 flex flex-col justify-center bg-[#0f0f0f]">
-                    <div id="c-content" class="space-y-6">
-                        <span id="c-tag" class="inline-block px-3 py-1 bg-red-900/20 text-red-500 text-[10px] font-bold uppercase tracking-widest rounded-full">Prodotto 01</span>
-                        <h3 id="c-title" class="text-3xl md:text-4xl font-bold text-white tracking-tighter">Cassata Artigianale</h3>
-                        <p id="c-desc" class="text-gray-400 leading-relaxed font-light min-h-[100px]">
-                            Un trionfo di pan di spagna, pasta reale e frutta candita. Ogni pezzo è decorato a mano dai nostri maestri pasticceri napoletani.
-                        </p>
-
-                        <div class="flex items-center justify-center gap-6 pt-4">
-                            <div class="flex items-center gap-6">
-                                <button id="c-prev" class="p-3 rounded-full border border-white/20 hover:bg-white/5 text-white transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
-                                </button>
-                                <div class="flex gap-2">
-                                    <div class="c-dot w-6 h-1 bg-red-700 transition-all duration-300"></div>
-                                    <div class="c-dot w-6 h-1 bg-white/10 transition-all duration-300"></div>
-                                    <div class="c-dot w-6 h-1 bg-white/10 transition-all duration-300"></div>
-                                </div>
-                                <button id="c-next" class="p-3 rounded-full border border-white/20 hover:bg-white/5 text-white transition-colors">
-                                    <svg class="group-hover:translate-x-1 transition-transform" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="relative z-40 min-h-screen bg-white text-black flex items-center justify-center p-10">
-        <div class="max-w-4xl w-full">
-            <div class="flex flex-col items-start space-y-12">
-                <div class="space-y-2">
-                    <h2 class="text-5xl md:text-6xl font-black uppercase tracking-tighter">Contatti</h2>
-                    <div class="w-20 h-1.5 bg-red-700"></div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 w-full">
-                    <div class="space-y-1">
-                        <p class="text-xs uppercase tracking-widest text-gray-400 font-bold">Email</p>
-                        <a href="mailto:test@test.it" class="text-2xl md:text-3xl font-light hover:text-red-700 transition-colors duration-300">test@test.it</a>
-                    </div>
-                    <div class="space-y-1">
-                        <p class="text-xs uppercase tracking-widest text-gray-400 font-bold">Telefono</p>
-                        <a href="tel:12332123132" class="text-2xl md:text-3xl font-light hover:text-red-700 transition-colors duration-300">+39 123 321 23132</a>
-                    </div>
-                    <div class="space-y-1 md:col-span-2 border-t border-gray-100 pt-8">
-                        <p class="text-xs uppercase tracking-widest text-gray-400 font-bold">Orari</p>
-                        <div class="flex flex-col space-y-2 pt-2">
-                            <p class="text-xl font-medium">Lunedì — Venerdì</p>
-                            <p class="text-lg font-light text-gray-600">09:00 - 18:00</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-white border-t border-gray-100 py-10 px-8">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <p class="text-sm text-gray-500 font-light">&copy; 2026 Lyslys. Tutti i diritti riservati.</p>
-            <div class="flex flex-col md:items-end gap-1">
-                <p class="text-xs uppercase tracking-widest text-gray-400 font-bold">P.IVA</p>
-                <p class="text-sm text-gray-600 font-mono">01234567890</p>
-            </div>
-        </div>
-    </footer>
-
-<script>
-    gsap.registerPlugin(ScrollTrigger);
-
-    // --- 1. CONFIGURAZIONE DATI ---
-    const carouselSlides = [
-        {
-            title: "Cassata Artigianale",
-            tag: "Prodotto 01",
-            desc: "Un trionfo di pan di spagna, pasta reale e frutta candita. Ogni pezzo è decorato a mano dai nostri maestri pasticceri napoletani.",
-            folder: "cassatina",
-            frameCount: 242,
-            images: []
-        },
-        {
-            title: "Babà napoletano",
-            tag: "Prodotto 02",
-            desc: "Il re della tradizione partenopea: un impasto a lunga lievitazione, soffice e alveolato, bagnato generosamente nel rum ambrato pregiato.",
-            folder: "babba",
-            frameCount: 242,
-            images: []
-        },
-        {
-            title: "Il Cannolo Siciliano",
-            tag: "Prodotto 03",
-            desc: "L'autentica tradizione siciliana, con una cialda artigianale fritta e ricotta lavorata secondo l'antica ricetta dei maestri dell'isola.",
-            folder: "cannolo",
-            frameCount: 121,
-            images: []
-        },
-    ];
-
-    // Configurazione Hero
-    const heroFrameCount = 121;
-    const heroImages = [];
-    const heroState = { frame: 0 };
-    const heroCanvas = document.getElementById("hero-canvas");
-    const heroCtx = heroCanvas.getContext("2d");
-
-    // Variabili Carosello
-    let cIndex = 0;
-    let cFrame = 0;
-    let cIsPlaying = true;
-    let cDirection = 1; // 1 = forward, -1 = backward
-    const cCanvas = document.getElementById("carousel-canvas");
-    const cCtx = cCanvas.getContext("2d");
-    const cDots = document.querySelectorAll(".c-dot");
-
-    const globalLoader = document.getElementById("loader");
-
-    // --- 2. PRECARICAMENTO OTTIMIZZATO (PRIORITÀ HERO) ---
-    let heroLoadedCount = 0;
-
-    function handleHeroLoad() {
-        heroLoadedCount++;
-        if (heroLoadedCount === heroFrameCount) {
-            hideLoader();
-            renderHero(); 
-            startLoadingCarousel(); // Carica il resto in background
-        }
-    }
-
-    function hideLoader() {
-        if (globalLoader) {
-            globalLoader.style.opacity = "0";
-            setTimeout(() => {
-                globalLoader.style.display = "none";
-                animateCarousel(); // Avvia il loop
-            }, 500);
-        }
-    }
-
-    // Carica subito l'Hero
-    for (let i = 0; i < heroFrameCount; i++) {
-        const img = new Image();
-        img.onload = handleHeroLoad;
-        img.src = `./images/cannolo/frame_${(i + 1).toString().padStart(4, '0')}.webp`;
-        heroImages.push(img);
-    }
-
-    // Carica il carosello dopo
-    function startLoadingCarousel() {
-        carouselSlides.forEach((slide) => {
-            for (let i = 0; i < slide.frameCount; i++) {
-                const img = new Image();
-                img.src = `./images/${slide.folder}/frame_${(i + 1).toString().padStart(4, '0')}.webp`;
-                slide.images.push(img);
-            }
-        });
-    }
-
-    // --- 3. ANIMAZIONE HERO (SCROLL) ---
-    gsap.to(heroState, {
-        frame: heroFrameCount - 1,
-        snap: "frame",
-        ease: "none",
-        scrollTrigger: {
-            trigger: "#scroll-container",
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 0.5,
-        },
-        onUpdate: renderHero,
-    });
-
-    gsap.to(".animate-me", {
-        opacity: 1,
-        y: 0,
-        stagger: 0.2,
-        duration: 1,
-        ease: "power2.out",
-        scrollTrigger: {
-            trigger: "#scroll-container",
-            start: "top -20%", 
-            end: "top -60%",   
-            scrub: 1,
-        }
-    });
-
-    function renderHero() {
-        const img = heroImages[heroState.frame];
-        if (!img || !img.complete) return;
-        const isMobile = window.innerWidth < 768;
-        heroCanvas.width = isMobile ? window.innerWidth : window.innerWidth / 2;
-        heroCanvas.height = isMobile ? window.innerHeight / 2 : window.innerHeight;
-        drawCover(heroCtx, heroCanvas, img);
-    }
-
-    // --- 4. ANIMAZIONE CAROSELLO (BOOMERANG LOOP) ---
-    function animateCarousel() {
-        if (!cIsPlaying) return;
-
-        const currentSlide = carouselSlides[cIndex];
-        if (!currentSlide || currentSlide.images.length === 0) {
-            requestAnimationFrame(animateCarousel);
-            return;
-        }
-
-        cFrame += cDirection;
-
-        // Logica Boomerang
-        if (cFrame >= currentSlide.frameCount - 1) {
-            cFrame = currentSlide.frameCount - 1;
-            cDirection = -1;
-        } else if (cFrame <= 0) {
-            cFrame = 0;
-            cDirection = 1;
-        }
-
-        const img = currentSlide.images[cFrame];
-        if (img && img.complete) {
-            cCanvas.width = cCanvas.offsetWidth;
-            cCanvas.height = cCanvas.offsetHeight;
-            drawCover(cCtx, cCanvas, img);
-        }
-        requestAnimationFrame(animateCarousel);
-    }
-
-    function updateSlide(direction) {
-        cIndex = (cIndex + direction + carouselSlides.length) % carouselSlides.length;
-        const data = carouselSlides[cIndex];
-
-        cFrame = 0;
-        cDirection = 1;
-
-        gsap.to(["#c-tag", "#c-title", "#c-desc"], {
-            opacity: 0, y: 15, stagger: 0.05, duration: 0.2,
-            onComplete: () => {
-                document.getElementById("c-title").innerText = data.title;
-                document.getElementById("c-desc").innerText = data.desc;
-                document.getElementById("c-tag").innerText = data.tag;
-                cDots.forEach((dot, i) => {
-                    dot.className = i === cIndex ? "c-dot w-6 h-1 bg-red-700 transition-all" : "c-dot w-6 h-1 bg-white/10 transition-all";
-                });
-                gsap.to(["#c-tag", "#c-title", "#c-desc"], { opacity: 1, y: 0, stagger: 0.1, duration: 0.4 });
-            }
-        });
-    }
-
-    function drawCover(ctx, cvs, img) {
-        const imgRatio = img.width / img.height;
-        const cvsRatio = cvs.width / cvs.height;
-        let dW, dH, oX, oY;
-        if (imgRatio > cvsRatio) {
-            dH = cvs.height; dW = cvs.height * imgRatio;
-            oX = (cvs.width - dW) / 2; oY = 0;
-        } else {
-            dW = cvs.width; dH = cvs.width / imgRatio;
-            oX = 0; oY = (cvs.height - dH) / 2;
-        }
-        ctx.clearRect(0, 0, cvs.width, cvs.height);
-        ctx.drawImage(img, oX, oY, dW, dH);
-    }
-
-    document.getElementById("c-next").addEventListener("click", () => updateSlide(1));
-    document.getElementById("c-prev").addEventListener("click", () => updateSlide(-1));
-    window.addEventListener("resize", renderHero);
-</script>
+  <script type="module" src="./js/main.js"></script>
 </body>
 </html>
