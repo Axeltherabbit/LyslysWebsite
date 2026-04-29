@@ -30,7 +30,8 @@ async function init() {
   hideLoader(() => {
     initHeroSequence({
       images: heroImages,
-      frameCount: heroConfig.frameCount
+      frameCount: heroConfig.frameCount,
+      autoScroll: true
     });
 
     loadCarouselSlides(carouselSlides);

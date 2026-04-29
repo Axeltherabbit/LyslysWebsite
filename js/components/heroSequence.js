@@ -34,8 +34,11 @@ export function HeroSequence() {
   `;
 }
 
-export function initHeroSequence({ images, frameCount }) {
+export function initHeroSequence({ images, frameCount, autoScroll = true }) {
   const canvas = document.getElementById("hero-canvas");
+
+  if (!canvas) return;
+
   const ctx = canvas.getContext("2d");
 
   const state = {
@@ -85,4 +88,38 @@ export function initHeroSequence({ images, frameCount }) {
   window.addEventListener("resize", render);
 
   render();
+
+  if (autoScroll) {
+    startHeroAutoScroll();
+  }
+}
+
+function startHeroAutoScroll() {
+  const scrollContainer = document.getElementById("scroll-container");
+
+  if (!scrollContainer) return;
+
+  ScrollTrigger.refresh();
+
+  const startY = scrollContainer.offsetTop;
+  const endY =
+    scrollContainer.offsetTop +
+    scrollContainer.offsetHeight -
+    window.innerHeight;
+
+  const scrollState = {
+    y: startY
+  };
+
+  window.scrollTo(0, startY);
+
+  gsap.to(scrollState, {
+    y: endY,
+    duration: 5,
+    ease: "power2.inOut",
+    delay: 0.4,
+    onUpdate: () => {
+      window.scrollTo(0, scrollState.y);
+    }
+  });
 }
