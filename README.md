@@ -5,7 +5,7 @@ python -m http.server
 
 ## Video to frames jpg
 ```
-ffmpeg -i video/video.mp4 -q:v 5 -vf scale=1280:-1 images/video/frame_%04d.jpg
+ffmpeg -i video/video.mp4 -c:v libwebp -q:v 65 -vf scale=800:-1 images/video/frame_%04d.webp
 ```
 
 
