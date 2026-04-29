@@ -201,6 +201,7 @@
     let cIndex = 0;
     let cFrame = 0;
     let cIsPlaying = true;
+    let cDirection = 1;
     const cCanvas = document.getElementById("carousel-canvas");
     const cCtx = cCanvas.getContext("2d");
     const cDots = document.querySelectorAll(".c-dot");
@@ -289,22 +290,30 @@
 
     // --- 4. ANIMAZIONE CAROSELLO (AUTO-PLAY STOP) ---
     function animateCarousel() {
-        if (!cIsPlaying) return;
+	    if (!cIsPlaying) return;
 
-        const currentSlide = carouselSlides[cIndex];
-        if (cFrame >= currentSlide.frameCount - 1) {
-            cIsPlaying = false;
-        } else {
-            cFrame++;
-        }
+    const currentSlide = carouselSlides[cIndex];
 
-        const img = currentSlide.images[cFrame];
-        if (img && img.complete) {
-            cCanvas.width = cCanvas.offsetWidth;
-            cCanvas.height = cCanvas.offsetHeight;
-            drawCover(cCtx, cCanvas, img);
-        }
-        requestAnimationFrame(animateCarousel);
+    // Avanza o indietreggia in base alla direzione
+    cFrame += cDirection;
+
+    // animation Boomerang
+    if (cFrame >= currentSlide.frameCount - 1) {
+        cFrame = currentSlide.frameCount - 1;
+        cDirection = -1; 
+    } else if (cFrame <= 0) {
+        cFrame = 0;
+        cDirection = 1; 
+    }
+
+    const img = currentSlide.images[cFrame];
+    if (img && img.complete) {
+        cCanvas.width = cCanvas.offsetWidth;
+        cCanvas.height = cCanvas.offsetHeight;
+        drawCover(cCtx, cCanvas, img);
+    }
+
+    requestAnimationFrame(animateCarousel);
     }
 
     function updateSlide(direction) {
@@ -312,6 +321,7 @@
         const data = carouselSlides[cIndex];
 
         cFrame = 0;
+	cDirection = 1;
         if (!cIsPlaying) {
             cIsPlaying = true;
             animateCarousel();
